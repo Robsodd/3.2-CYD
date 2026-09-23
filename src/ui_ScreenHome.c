@@ -5,39 +5,44 @@
 
 #include "ui.h"
 
-lv_obj_t * uic_labelLEDs;
-lv_obj_t * uic_LEDs;
-lv_obj_t * uic_ScreenHome;
-lv_obj_t * ui_ScreenHome = NULL;
-lv_obj_t * ui_LEDs = NULL;
-lv_obj_t * ui_labelLEDs = NULL;
-lv_obj_t * ui_Brightness2 = NULL;
-lv_obj_t * ui_Calibration = NULL;
-lv_obj_t * ui_labelCalbration = NULL;
+extern void force_recalibrate(lv_event_t *e);
+
+lv_obj_t *uic_labelLEDs;
+lv_obj_t *uic_LEDs;
+lv_obj_t *uic_ScreenHome;
+lv_obj_t *ui_ScreenHome = NULL;
+lv_obj_t *ui_LEDs = NULL;
+lv_obj_t *ui_labelLEDs = NULL;
+lv_obj_t *ui_Brightness2 = NULL;
+lv_obj_t *ui_Calibration = NULL;
+lv_obj_t *ui_labelCalbration = NULL;
 // event funtions
-void ui_event_LEDs(lv_event_t * e)
+void ui_event_LEDs(lv_event_t *e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
 
-    if(event_code == LV_EVENT_CLICKED) {
+    if (event_code == LV_EVENT_CLICKED)
+    {
         _ui_screen_change(&ui_ScreenLEDs, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_ScreenLEDs_screen_init);
     }
 }
 
-void ui_event_Calibration(lv_event_t * e)
+void ui_event_Calibration(lv_event_t *e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
 
-    if(event_code == LV_EVENT_CLICKED) {
+    if (event_code == LV_EVENT_CLICKED)
+    {
         force_recalibrate(e);
     }
 }
 
-void ui_event_labelCalbration(lv_event_t * e)
+void ui_event_labelCalbration(lv_event_t *e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
 
-    if(event_code == LV_EVENT_CLICKED) {
+    if (event_code == LV_EVENT_CLICKED)
+    {
         _ui_screen_change(&ui_Calibrate, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_Calibrate_screen_init);
     }
 }
@@ -47,7 +52,7 @@ void ui_event_labelCalbration(lv_event_t * e)
 void ui_ScreenHome_screen_init(void)
 {
     ui_ScreenHome = lv_obj_create(NULL);
-    lv_obj_clear_flag(ui_ScreenHome, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_clear_flag(ui_ScreenHome, LV_OBJ_FLAG_SCROLLABLE); /// Flags
 
     ui_LEDs = lv_btn_create(ui_ScreenHome);
     lv_obj_set_width(ui_LEDs, 100);
@@ -55,12 +60,12 @@ void ui_ScreenHome_screen_init(void)
     lv_obj_set_x(ui_LEDs, -88);
     lv_obj_set_y(ui_LEDs, -80);
     lv_obj_set_align(ui_LEDs, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_LEDs, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_LEDs, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_add_flag(ui_LEDs, LV_OBJ_FLAG_SCROLL_ON_FOCUS); /// Flags
+    lv_obj_clear_flag(ui_LEDs, LV_OBJ_FLAG_SCROLLABLE);    /// Flags
 
     ui_labelLEDs = lv_label_create(ui_LEDs);
-    lv_obj_set_width(ui_labelLEDs, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_labelLEDs, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_labelLEDs, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_labelLEDs, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_labelLEDs, -1);
     lv_obj_set_y(ui_labelLEDs, 0);
     lv_obj_set_align(ui_labelLEDs, LV_ALIGN_CENTER);
@@ -69,7 +74,8 @@ void ui_ScreenHome_screen_init(void)
     ui_Brightness2 = lv_slider_create(ui_ScreenHome);
     lv_slider_set_range(ui_Brightness2, 0, 10);
     lv_slider_set_value(ui_Brightness2, 10, LV_ANIM_OFF);
-    if(lv_slider_get_mode(ui_Brightness2) == LV_SLIDER_MODE_RANGE) lv_slider_set_left_value(ui_Brightness2, 0, LV_ANIM_OFF);
+    if (lv_slider_get_mode(ui_Brightness2) == LV_SLIDER_MODE_RANGE)
+        lv_slider_set_left_value(ui_Brightness2, 0, LV_ANIM_OFF);
     lv_obj_set_width(ui_Brightness2, 265);
     lv_obj_set_height(ui_Brightness2, 10);
     lv_obj_set_x(ui_Brightness2, -9);
@@ -82,14 +88,14 @@ void ui_ScreenHome_screen_init(void)
     lv_obj_set_x(ui_Calibration, -87);
     lv_obj_set_y(ui_Calibration, -3);
     lv_obj_set_align(ui_Calibration, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_Calibration, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_Calibration, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_add_flag(ui_Calibration, LV_OBJ_FLAG_SCROLL_ON_FOCUS); /// Flags
+    lv_obj_clear_flag(ui_Calibration, LV_OBJ_FLAG_SCROLLABLE);    /// Flags
     lv_obj_set_style_bg_color(ui_Calibration, lv_color_hex(0x047100), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_Calibration, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_labelCalbration = lv_label_create(ui_Calibration);
-    lv_obj_set_width(ui_labelCalbration, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_labelCalbration, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_labelCalbration, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_labelCalbration, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_labelCalbration, -1);
     lv_obj_set_y(ui_labelCalbration, 0);
     lv_obj_set_align(ui_labelCalbration, LV_ALIGN_CENTER);
@@ -101,12 +107,12 @@ void ui_ScreenHome_screen_init(void)
     uic_ScreenHome = ui_ScreenHome;
     uic_LEDs = ui_LEDs;
     uic_labelLEDs = ui_labelLEDs;
-
 }
 
 void ui_ScreenHome_screen_destroy(void)
 {
-    if(ui_ScreenHome) lv_obj_del(ui_ScreenHome);
+    if (ui_ScreenHome)
+        lv_obj_del(ui_ScreenHome);
 
     // NULL screen variables
     uic_ScreenHome = NULL;
@@ -118,5 +124,4 @@ void ui_ScreenHome_screen_destroy(void)
     ui_Brightness2 = NULL;
     ui_Calibration = NULL;
     ui_labelCalbration = NULL;
-
 }
